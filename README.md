@@ -18,8 +18,9 @@ dsh> ./main
 * Lowkey just started
 
 ## Todo
-- [ ] Make a input system
-- [ ] Get normal programs to run (ls, gcc)
+- [ ] get child processes to persist (ie cd test, mkdir test-inside should make a test-inside inside test)
+- [x] Make a input system
+- [x] Get normal programs to run (ls, gcc)
 
 ## Why I Made This
 
