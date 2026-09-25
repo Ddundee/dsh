@@ -1,5 +1,6 @@
+#include <stddef.h>
 #ifndef MACRO_H
 
-char** dsh_parser(char* const input);
+void dsh_parser(char* const input, size_t len, char** output, size_t* outputSize);
 
 #endif

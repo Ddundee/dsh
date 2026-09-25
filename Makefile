@@ -1,15 +1,15 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 OUT = dsh
-FILES = main.c parser.c
+FILES = main.c parser.c util.c
 DEBUG = -DDEBUG -g
 
-all: compile
+all: compile run
 
 compile: clear main.c
 	$(CC) $(CFLAGS) -o $(OUT) $(FILES)
 
-run: compile
+run:
 	./dsh
 
 clear:

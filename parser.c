@@ -1,17 +1,17 @@
-#include "main.h"
 #include "parser.h"
-#include <strings.h>
+#include <string.h>
 #include <stdio.h>
 
-char** dsh_parser(char* const input) {
-	static char* ret[MAX_BUFFER];
+void dsh_parser(char* const input, size_t len, char** output, size_t* outputSize) {
 
 	char *token = strtok(input, " ");
-	ret[0] = token;
-	for(int i = 1; (token = strtok(NULL, " ")) != NULL && i < MAX_BUFFER; i++) {
-		ret[i] = token;
+	output[0] = token;
+	size_t i = 1;
+	for(;(token = strtok(NULL, " ")) != NULL && i < len; i++) {
+		output[i] = token;
 	}
+	output[i] = NULL;
+	*outputSize = i;
 
-	return ret;
 }
 
