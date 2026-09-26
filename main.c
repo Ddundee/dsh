@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include "main.h"
 #include "parser.h"
+#include "builtin/builtin.h"
 
 int main() {
 	// initialize env
@@ -34,13 +35,7 @@ int main() {
 		printf("running: \n");
 #endif
 
-		if (strcmp(cmd[0], "exit") == 0) {
-			exit(0);
-		}
-		else if (strcmp(cmd[0], "cd") == 0 && cmdSize == 2) {
-			chdir(cmd[1]);
-			continue;
-		}
+		if (execute_command((char**)cmd, cmdSize) != -1) continue;
 
 		pid_t p = fork();
 

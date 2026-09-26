@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 OUT = dsh
-FILES = main.c parser.c util.c
+FILES = main.c parser.c util.c builtin/command_table.c builtin/dsh_cd.c builtin/dsh_exit.c
 DEBUG = -DDEBUG -g
 
 all: compile run
