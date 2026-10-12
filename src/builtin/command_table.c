@@ -1,5 +1,5 @@
 #include <string.h>
-#include "builtin.h"
+#include "../../include/builtin.h"
 
 typedef int (*CommandHandler)(char** cmd, size_t len);
 
@@ -8,10 +8,9 @@ struct CommandEntry {
 	CommandHandler handler;
 };
 
-
 static const struct CommandEntry table[] = {
 	{"cd", dsh_handle_cd},
-	{"exit", dsh_handle_exit}
+	{"exit", dsh_handle_exit},
 };
 
 #define COMMAND_COUNT (sizeof(table) / sizeof(table[0]))

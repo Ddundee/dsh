@@ -23,6 +23,7 @@ dsh> ./main
 - [x] Get normal programs to run (ls, gcc)
 - [x] make proper builtins
 - [ ] fix cd to work with relative paths
+- [ ] make arrow keys work (rework the entire parser)
 
 ## Why I Made This
 

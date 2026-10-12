@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "main.h"
-#include "parser.h"
-#include "builtin/builtin.h"
+#include "../include/main.h"
+#include "../include/parser.h"
+#include "../include/builtin.h"
+#include "../include/util.h"
 
 int main() {
 	// initialize env
@@ -37,26 +37,7 @@ int main() {
 
 		if (execute_command((char**)cmd, cmdSize) != -1) continue;
 
-		pid_t p = fork();
-
-#ifdef DEBUG
-		printf("starting fork(pid: %d)\n", p);
-#endif
-
-		if (p < 0) perror("creating fork for process failed\n");
-		else if (p == 0) {
-			execvp(cmd[0], cmd);
-		}
-		else {
-			int status;
-
-#ifdef DEBUG
-			pid_t reaped_pid = waitpid(p, &status, 0);
-			printf("process finished (reaped_pid = %d, status = %d)\n", reaped_pid, status);
-#else
-			waitpid(p, &status, 0);
-#endif
-		}
+		dsh_fork_exec((char**)cmd);
 
 		free(input);
 	}
