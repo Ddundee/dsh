@@ -8,5 +8,6 @@ struct Info {
 };
 
 struct Info initialize();
+extern struct Info info;
 
 #endif

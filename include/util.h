@@ -5,5 +5,5 @@
 
 void str_trim(char *str);
 pid_t dsh_fork_exec(char** cmd);
-
+void trigger_prompt();
 #endif

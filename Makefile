@@ -2,12 +2,12 @@ CC = gcc
 CFLAGS = 
 OUT = dsh
 OUT_DIR = out
-FILES = src/**/*.c
+FILES = $(shell find src -name '*.c')
 DEBUG = -DDEBUG -g
 
 all: compile run
 
-compile: clear main.c
+compile: clear 
 	$(CC) $(CFLAGS) -o "$(OUT_DIR)/$(OUT)" $(FILES)
 
 run:
@@ -17,7 +17,7 @@ clear:
 	rm -rf $(OUT_DIR)/*
 
 debug:
-	$(CC) $(CFLAGS) $(DEBUG) -o $(OUT) $(FILES)
+	$(CC) $(CFLAGS) $(DEBUG) -o "$(OUT_DIR)/$(OUT)" $(FILES)
 
 debugger: debug
 	lldb "./$(OUT_DIR)/$(OUT)"

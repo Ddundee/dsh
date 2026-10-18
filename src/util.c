@@ -1,9 +1,12 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include "../include/builtin.h"
+#include "../include/main.h"
+#include "../include/parser.h"
 
 void str_trim(char *str) {
     if (str == NULL) return;
@@ -26,7 +29,7 @@ void str_trim(char *str) {
 }
 
 pid_t dsh_fork_exec(char** cmd) {
-    
+
     pid_t p = fork();
 
 #ifdef DEBUG
@@ -49,4 +52,38 @@ pid_t dsh_fork_exec(char** cmd) {
         return reaped_pid;
     }
     return -1;
+}
+
+void trigger_prompt() {
+#ifdef DEBUG
+    printf("\ntrigger_prompt triggered\n");
+#endif
+
+    char* input = calloc(MAX_BUFFER, sizeof(char));
+    size_t inputSize = 0;
+
+    printf("%s$dsh > ", info.user);
+
+    if (getline(&input, &inputSize, stdin) == -1) exit(1);
+    input[strcspn(input, "\n")] = 0;
+
+    char* cmd[MAX_BUFFER];
+    size_t cmdSize = 0;
+    dsh_parser(input, inputSize, cmd, &cmdSize);
+    
+
+#ifdef DEBUG
+    printf("program name: %s\n", cmd[0]);
+    for(size_t itr = 1; itr < cmdSize; itr++) {
+        printf("flag: %s\n", cmd[itr]);
+    }
+    printf("running: \n");
+    printf("execute_command(cmd, %zu)\n", cmdSize);
+#endif
+
+    if (execute_command((char**)cmd, cmdSize) != -1) return;
+
+    dsh_fork_exec((char**)cmd);
+
+    free(input);
 }
