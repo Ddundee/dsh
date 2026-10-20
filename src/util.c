@@ -78,12 +78,29 @@ void trigger_prompt() {
         printf("flag: %s\n", cmd[itr]);
     }
     printf("running: \n");
-    printf("execute_command(cmd, %zu)\n", cmdSize);
+    printf("execute_command([");
+    for(int i = 0; i < cmdSize; i++) {
+        printf(" \"%s\" ", cmd[i]);
+    }
+    printf("], %zu)\n", cmdSize);
+//    if (cmd[0] != NULL) printf("cmd[0] = NULL\n");
+//    else printf("cmd[0].length = %lu\n", strlen(cmd[0]));
 #endif
 
-    if (execute_command((char**)cmd, cmdSize) != -1) return;
 
-    dsh_fork_exec((char**)cmd);
+#ifdef DEBUG
+    printf("freeing\n");
+#endif
+    if (cmd[0] != NULL && execute_command((char**)cmd, cmdSize) == -1) {
+        dsh_fork_exec((char**)cmd);
+    }
 
+
+#ifdef DEBUG
+    printf("freeing\n");
+#endif
     free(input);
+#ifdef DEBUG
+    printf("freeing\n");
+#endif
 }

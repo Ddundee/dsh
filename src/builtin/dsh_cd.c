@@ -4,11 +4,14 @@
 #include <unistd.h>
 
 int dsh_handle_cd(char** cmd, size_t len) {
+	char* home_ptr = getenv("HOME");
 #ifdef DEBUG
 	printf("| | | cd starting (len = %zu)\n", len);
 #endif
-	char* home_ptr = getenv("HOME");
-	if (len == 1) chdir(home_ptr);
+	if (len == 1) {
+		chdir(home_ptr);
+		return 0;
+	}
 
 	if (cmd[1][0] == '~') {
 		int cmd_len = strlen(cmd[1]);
@@ -19,6 +22,9 @@ int dsh_handle_cd(char** cmd, size_t len) {
 		path[cmd_len] = '/';
 		for(int i = 0; i < home_len; i++) path[i + cmd_len + 1] = cmd[1][i];
 		path[cmd_len + home_len + 1] = '\0';
+#ifdef DEBUG
+		printf("| | | cd path = %s\n", path);
+#endif
 	}
 #ifdef DEBUG
 	printf("| | | cd parsed; running chdir (len = %zu)\n", len);
