@@ -38,6 +38,8 @@ pid_t dsh_fork_exec(char** cmd) {
 
     if (p < 0) perror("creating fork for process failed\n");
     else if (p == 0) {
+        signal(SIGINT, SIG_DFL);
+
         execvp(cmd[0], cmd);
         _exit(0);
     }
