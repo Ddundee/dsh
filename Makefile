@@ -8,7 +8,8 @@ DEBUG = -DDEBUG -g
 all: compile run
 
 .PHONY: compile
-compile: clear 
+compile: clear
+	mkdir -p "$(OUT_DIR)"
 	$(CC) $(CFLAGS) -o "$(OUT_DIR)/$(OUT)" $(FILES)
 
 .PHONY: run
@@ -21,6 +22,7 @@ clear:
 
 .PHONY: debug
 debug:
+	mkdir -p "$(OUT_DIR)"
 	$(CC) $(CFLAGS) $(DEBUG) -o "$(OUT_DIR)/$(OUT)" $(FILES)
 
 .PHONY: debugger

@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor scratch files
+*.swp
+*.swo
+*~
+
+# Build output
+/out/
+*.o
+*.dSYM/
+a.out
