@@ -39,6 +39,7 @@ pid_t dsh_fork_exec(char** cmd) {
     if (p < 0) perror("creating fork for process failed\n");
     else if (p == 0) {
         execvp(cmd[0], cmd);
+        _exit(0);
     }
     else {
         int status;
@@ -83,24 +84,15 @@ void trigger_prompt() {
         printf(" \"%s\" ", cmd[i]);
     }
     printf("], %zu)\n", cmdSize);
-//    if (cmd[0] != NULL) printf("cmd[0] = NULL\n");
+    if (cmd[0] != NULL) printf("cmd[0] = NULL\n");
 //    else printf("cmd[0].length = %lu\n", strlen(cmd[0]));
 #endif
 
 
-#ifdef DEBUG
-    printf("freeing\n");
-#endif
     if (cmd[0] != NULL && execute_command((char**)cmd, cmdSize) == -1) {
         dsh_fork_exec((char**)cmd);
     }
 
 
-#ifdef DEBUG
-    printf("freeing\n");
-#endif
     free(input);
-#ifdef DEBUG
-    printf("freeing\n");
-#endif
 }
